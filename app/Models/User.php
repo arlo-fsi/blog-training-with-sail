@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\{
+    Casts\Attribute,
     Factories\HasFactory,
     Prunable,
     SoftDeletes
@@ -38,7 +39,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -53,5 +53,13 @@ class User extends Authenticatable
     public function prunable()
     {
         return static::where('created_at', '<=', now()->subWeek());
+    }
+
+    public function password(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value,
+            set: fn ($value) => bcrypt($value),
+        );
     }
 }

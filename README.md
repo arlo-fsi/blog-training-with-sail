@@ -32,4 +32,7 @@ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' trai
 
 // .env
 DB_HOST=172.19.0.6
+
+// [mysql] as root
+ALTER USER 'sail' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
