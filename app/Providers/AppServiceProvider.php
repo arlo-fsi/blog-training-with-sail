@@ -23,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $components = [
+            'Auth',
+        ];
+
+        foreach ($components as $component) {
+            $this->app->bind("App\\Interfaces\\{$component}Interface", "App\\Repositories\\{$component}Repository");
+        }
+
     }
 }
