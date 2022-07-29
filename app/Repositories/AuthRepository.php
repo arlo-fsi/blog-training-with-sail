@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\AuthInterface;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 use App\Http\Requests\{
     LoginRequest,
@@ -28,7 +29,7 @@ class AuthRepository implements AuthInterface
         if (Auth::attempt($values)) {
             $req->session()->regenerate();
 
-            return redirect()->route('management');
+            return redirect()->route('articleList');
         }
 
         return back()->withInput();
@@ -41,6 +42,16 @@ class AuthRepository implements AuthInterface
         User::firstOrCreate($values);
         session()->flash('success', 'Successfully Registered!');
 
-        return redirect()->route('login');
+        return redirect()->route('loginView');
+    }
+
+    public function logout(Request $req)
+    {
+        Auth::logout();
+
+        $req->session()->invalidate();
+        $req->session()->regenerate();
+
+        return redirect()->route('loginView');
     }
 }

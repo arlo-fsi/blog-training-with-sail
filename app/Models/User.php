@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\UserRole;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -50,9 +51,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function prunable()
+    public function getIsAdminAttribute(): bool
     {
-        return static::where('created_at', '<=', now()->subWeek());
+        return $this->attributes['role'] == UserRole::ADMIN()->getValue();
+    }
+
+    public function getNameAttribute(): string
+    {
+        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 
     public function password(): Attribute
@@ -61,5 +67,10 @@ class User extends Authenticatable
             get: fn ($value) => $value,
             set: fn ($value) => bcrypt($value),
         );
+    }
+
+    public function prunable()
+    {
+        return static::where('created_at', '<=', now()->subWeek());
     }
 }

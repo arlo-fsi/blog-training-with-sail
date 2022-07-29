@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\AuthInterface;
+use Illuminate\Http\Request;
 
 use App\Http\Requests\{
     LoginRequest,
@@ -36,5 +37,10 @@ class AuthController extends Controller
     public function register(RegisterRequest $req)
     {
         return $this->auth->register($req);
+    }
+
+    public function logout(Request $req)
+    {
+        return $this->auth->logout($req);
     }
 }

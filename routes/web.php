@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\{
+    ArticleController,
+    AuthController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,16 +18,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'loginView'])->name('login');
-Route::get('/register', [AuthController::class, 'registerView']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::get('/', [AuthController::class, 'loginView'])->name('loginView');
+Route::get('/register', [AuthController::class, 'registerView'])->name('registerView');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::prefix('management')->group(function () {
-        Route::get('/', function () {
-            echo 'Management';
-            // TODO: update to controller
-        })->name('management');
+        Route::prefix('article')->group(function () {
+            Route::get('/list', [ArticleController::class, 'list'])->name('articleList');
+            Route::get('/add', [ArticleController::class, 'add'])->name('articleAdd');
+        });
+
+        Route::middleware(['admin'])->group(function () {
+
+        });
     });
 });
