@@ -14,8 +14,6 @@ class ArticleCategory extends Model
 {
     use HasFactory, SoftDeletes, Prunable;
 
-    protected $table = 'article_category';
-
     protected $fillable = [
         'name',
         'updated_user_id',

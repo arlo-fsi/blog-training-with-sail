@@ -1,0 +1,34 @@
+<?php
+
+namespace App\View\Components\Modal;
+
+use Illuminate\View\Component;
+
+class Article extends Component
+{
+    public $addMode;
+    public $categories;
+    public $article;
+
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
+    public function __construct(bool $addMode = true, $categories, $article = null)
+    {
+        $this->addMode = $addMode;
+        $this->categories = $categories;
+        $this->article = $article;
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\Contracts\View\View|\Closure|string
+     */
+    public function render()
+    {
+        return view('components.modal.article');
+    }
+}

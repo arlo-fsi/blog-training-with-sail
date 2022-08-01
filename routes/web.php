@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
+    ArticleCategoryController,
     ArticleController,
     AuthController
 };
@@ -18,10 +19,12 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/', [AuthController::class, 'loginView'])->name('loginView');
-Route::get('/register', [AuthController::class, 'registerView'])->name('registerView');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [AuthController::class, 'loginView'])->name('loginView');
+    Route::get('/register', [AuthController::class, 'registerView'])->name('registerView');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -29,7 +32,13 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('management')->group(function () {
         Route::prefix('article')->group(function () {
             Route::get('/list', [ArticleController::class, 'list'])->name('articleList');
-            Route::get('/add', [ArticleController::class, 'add'])->name('articleAdd');
+        });
+
+        Route::prefix('article-category')->group(function () {
+            Route::get('/list', [ArticleCategoryController::class, 'list'])->name('articleCategoryList');
+            Route::post('/create', [ArticleCategoryController::class, 'create'])->name('articleCategoryCreate');
+            Route::put('/update/{articleCategory}', [ArticleCategoryController::class, 'update'])->name('articleCategoryUpdate');
+            Route::delete('/delete/{articleCategory}', [ArticleCategoryController::class, 'delete'])->name('articleCategoryDelete');
         });
 
         Route::middleware(['admin'])->group(function () {

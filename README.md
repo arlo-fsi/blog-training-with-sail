@@ -36,3 +36,10 @@ DB_HOST=172.19.0.6
 // [mysql] as root
 ALTER USER 'sail' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
+
+3. Unable to Migrate or Connect to DB
+```
+sail artisan cache:clear 
+sail artisan config:clear
+sail artisan migrate
+```

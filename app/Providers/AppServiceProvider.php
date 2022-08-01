@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $components = [
             'Auth',
+            'Article',
+            'ArticleCategory',
         ];
 
         foreach ($components as $component) {

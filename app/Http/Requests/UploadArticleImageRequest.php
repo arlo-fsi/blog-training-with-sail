@@ -13,7 +13,7 @@ class UploadArticleImageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UploadArticleImageRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'article_category_id' => 'required|exists:article_categories,id',
+            'contents' => 'required',
         ];
     }
 }

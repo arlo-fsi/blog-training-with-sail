@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('article_category')) {
-            Schema::create('article_category', function (Blueprint $table) {
+        if (!Schema::hasTable('article_categories')) {
+            Schema::create('article_categories', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
                 $table->foreignId('updated_user_id')->constrained('users');
