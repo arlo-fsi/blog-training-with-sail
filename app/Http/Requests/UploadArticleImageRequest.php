@@ -24,9 +24,7 @@ class UploadArticleImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'article_category_id' => 'required|exists:article_categories,id',
-            'contents' => 'required',
+            'upload' => 'required|image',
         ];
     }
 }

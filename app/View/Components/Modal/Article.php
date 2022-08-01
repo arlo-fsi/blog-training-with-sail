@@ -9,6 +9,7 @@ class Article extends Component
     public $addMode;
     public $categories;
     public $article;
+    public $articleCategoryId;
 
     /**
      * Create a new component instance.
@@ -20,6 +21,7 @@ class Article extends Component
         $this->addMode = $addMode;
         $this->categories = $categories;
         $this->article = $article;
+        $this->articleCategoryId = $article == null ? null : $article->article_category_id;
     }
 
     /**

@@ -31,9 +31,9 @@ class ArticleController extends Controller
         return $this->article->create($req);
     }
 
-    public function uploadImage(UploadArticleImageRequest $req, Article $article)
+    public function uploadImage(UploadArticleImageRequest $req)
     {
-        return $this->article->uploadImage($req, $article);
+        return $this->article->uploadImage($req);
     }
 
     public function update(UpdateArticleRequest $req, Article $article)

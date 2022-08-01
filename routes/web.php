@@ -32,6 +32,10 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('management')->group(function () {
         Route::prefix('article')->group(function () {
             Route::get('/list', [ArticleController::class, 'list'])->name('articleList');
+            Route::post('/create', [ArticleController::class, 'create'])->name('articleCreate');
+            Route::post('/upload-image', [ArticleController::class, 'uploadImage'])->name('articleUploadImage');
+            Route::put('/update/{article}', [ArticleController::class, 'update'])->name('articleUpdate');
+            Route::delete('/delete/{article}', [ArticleController::class, 'delete'])->name('articleDelete');
         });
 
         Route::prefix('article-category')->group(function () {

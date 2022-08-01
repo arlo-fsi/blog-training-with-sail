@@ -29,6 +29,7 @@ class ArticleRepository implements ArticleInterface
     public function create(CreateArticleRequest $req)
     {
         $values = $req->validated();
+        dd($values);
         $slug = Str::slug($values['title']);
 
         $found = true;
@@ -45,14 +46,31 @@ class ArticleRepository implements ArticleInterface
         Article::create($values + [
             'slug' => $slug,
             'update_user_id' => auth()->id(),
+            // 'image_path' => session('imagePath'),
         ]);
         session()->flash('success', 'Article Added');
 
         return redirect()->back();
     }
 
-    public function uploadImage(UploadArticleImageRequest $req, Article $article)
+    public function uploadImage(UploadArticleImageRequest $req)
     {
+        if ($req->hasFile('upload')) {
+            $extension = $req->file('upload')->getClientOriginalName();
+            $filename = pathinfo($extension, PATHINFO_FILENAME);
+            $extension = $req->file('upload')->getClientOriginalExtension();
+            $filename = $filename . '_' . time() . '.' . $extension;
+            $req->file('upload')->storeAs('public/uploads', $filename);
+            $CKEditorFuncNum = $req->input('CKEditorFuncNum');
+            $url = asset('storage/uploads/' . $filename);
+            $msg = 'Image successfully uploaded';
+            $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+
+            @header('Content-type: text/html; charset=utf-8');
+            session()->put('imagePath', $url);
+
+            return $re;
+        }
     }
 
     public function update(UpdateArticleRequest $req, Article $article)

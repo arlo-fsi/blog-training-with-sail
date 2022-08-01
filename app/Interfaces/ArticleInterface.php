@@ -17,7 +17,7 @@ interface ArticleInterface
 
     public function create(CreateArticleRequest $req);
 
-    public function uploadImage(UploadArticleImageRequest $req, Article $article);
+    public function uploadImage(UploadArticleImageRequest $req);
 
     public function update(UpdateArticleRequest $req, Article $article);
 

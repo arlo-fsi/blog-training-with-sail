@@ -10,7 +10,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "myclabs/php-enum": "^1.8"
+        "myclabs/php-enum": "^1.8",
+        "ckeditor/ckeditor": "4.*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
