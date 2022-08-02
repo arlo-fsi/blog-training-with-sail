@@ -12,9 +12,8 @@
                         <strong>Articles</strong>
                     </div>
                     <div class="col-auto">
-                        <a data-bs-toggle="modal" data-bs-target="#modalArticle">
-                            <box-icon name='book-add' color="blue"></box-icon>
-                        </a>
+                        <box-icon name='book-add' color="blue" data-bs-toggle="modal" data-bs-target="#modalArticleadd">
+                        </box-icon>
                     </div>
                 </div>
 
@@ -23,22 +22,43 @@
                 <table class="table table-striped table-inverse table-responsive">
                     <thead class="thead-inverse">
                         <tr>
+                            <th></th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Updated By</th>
+                            <th>Option</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($articles as $item)
                             <tr>
+                                <td>
+                                    <img src="{{ $item->image_path ?? 'https://autism.assisted.pk/images/default_blog_img.png' }}"
+                                        alt="{{ $item->slug }}" height="30">
+                                </td>
                                 <td scope="row">{{ $item->title }}</td>
                                 <td>{{ $item->category->name }}</td>
                                 <td>{{ $item->user->name }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-evenly">
+                                        <box-icon name='edit-alt' color="blue" data-bs-toggle="modal"
+                                            data-bs-target="#modalArticle{{ $item->id }}">
+                                        </box-icon>
+                                        <box-icon name='trash' color="red" data-bs-toggle="modal"
+                                            data-bs-target="#modalArticleDelete{{ $item->id }}">
+                                        </box-icon>
+                                    </div>
+                                </td>
                             </tr>
+
+                            <x-modal.article id="{{ $item->id }}" :addMode="false" :categories="$categories"
+                                :article="$item" />
+                            <x-modal.article id="{{ $item->id }}" :addMode="false" :categories="$categories"
+                                :article="$item" />
                         @endforeach
                         @if (count($articles) == 0)
                             <tr>
-                                <td class="text-center" colspan="3">No Records Found!</td>
+                                <td class="text-center" colspan="5">No Records Found!</td>
                             </tr>
                         @endif
                     </tbody>
@@ -47,25 +67,7 @@
                 @if (count($articles) > 0)
                     <div class="row justify-content-center">
                         <div class="col-auto">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="visually-hidden">Next</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            {{ $articles->links() }}
                         </div>
                     </div>
                 @endif
@@ -74,5 +76,5 @@
         </div>
     </div>
 
-    <x-modal.article :addMode="true" :categories="$categories" />
+    <x-modal.article id="add" :addMode="true" :categories="$categories" />
 @endsection

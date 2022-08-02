@@ -20,7 +20,7 @@ class ArticleRepository implements ArticleInterface
 {
     public function list(Request $req)
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(5);
+        $articles = Article::orderBy('created_at', 'desc')->simplePaginate(10);
         $categories = ArticleCategory::all();
 
         return view('article.list', compact('articles', 'categories'));
@@ -29,7 +29,6 @@ class ArticleRepository implements ArticleInterface
     public function create(CreateArticleRequest $req)
     {
         $values = $req->validated();
-        dd($values);
         $slug = Str::slug($values['title']);
 
         $found = true;
@@ -45,8 +44,8 @@ class ArticleRepository implements ArticleInterface
         $slug = $temp;
         Article::create($values + [
             'slug' => $slug,
-            'update_user_id' => auth()->id(),
-            // 'image_path' => session('imagePath'),
+            'updated_user_id' => auth()->id(),
+            'image_path' => session('imagePath'),
         ]);
         session()->flash('success', 'Article Added');
 

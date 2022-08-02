@@ -7,6 +7,8 @@
     <title>@yield('title', 'Training App')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 </head>
 
 <body class="container-fluid bg-white">
@@ -56,7 +58,6 @@
     </script>
     <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
 
-    <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     @yield('scripts')
 </body>
 

@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class Article extends Component
 {
+    public $id;
     public $addMode;
     public $categories;
     public $article;
@@ -16,8 +17,9 @@ class Article extends Component
      *
      * @return void
      */
-    public function __construct(bool $addMode = true, $categories, $article = null)
+    public function __construct(string $id = '', bool $addMode = true, $categories, $article = null)
     {
+        $this->id = $id;
         $this->addMode = $addMode;
         $this->categories = $categories;
         $this->article = $article;
