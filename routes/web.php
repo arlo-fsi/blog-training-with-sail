@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ArticleCategoryController,
     ArticleController,
-    AuthController
+    AuthController,
+    BlogCategoryController,
+    BlogController
 };
 
 /*
@@ -43,6 +45,22 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/create', [ArticleCategoryController::class, 'create'])->name('articleCategoryCreate');
             Route::put('/update/{articleCategory}', [ArticleCategoryController::class, 'update'])->name('articleCategoryUpdate');
             Route::delete('/delete/{articleCategory}', [ArticleCategoryController::class, 'delete'])->name('articleCategoryDelete');
+        });
+
+        Route::prefix('blog')->group(function () {
+            Route::get('/list', [BlogController::class, 'list'])->name('blogList');
+            Route::get('/new', [BlogController::class, 'new'])->name('blogNew');
+            Route::post('/create', [BlogController::class, 'create'])->name('blogCreate');
+            Route::post('/upload-image', [BlogController::class, 'uploadImage'])->name('blogUploadImage');
+            Route::put('/update/{blog}', [BlogController::class, 'update'])->name('blogUpdate');
+            Route::delete('/delete/{blog}', [BlogController::class, 'delete'])->name('blogDelete');
+        });
+
+        Route::prefix('blog-category')->group(function () {
+            Route::get('/list', [BlogCategoryController::class, 'list'])->name('blogCategoryList');
+            Route::post('/create', [BlogCategoryController::class, 'create'])->name('blogCategoryCreate');
+            Route::put('/update/{blogCategory}', [BlogCategoryController::class, 'update'])->name('blogCategoryUpdate');
+            Route::delete('/delete/{blogCategory}', [BlogCategoryController::class, 'delete'])->name('blogCategoryDelete');
         });
 
         Route::middleware(['admin'])->group(function () {

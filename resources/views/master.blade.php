@@ -29,6 +29,15 @@
                                 <a class="dropdown-item" href="/management/article-category/list">Categories</a>
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Blogs</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownId">
+                                <a class="dropdown-item" href="/management/blog/list">List</a>
+                                <a class="dropdown-item" href="/management/blog/new">Create New</a>
+                                <a class="dropdown-item" href="/management/blog-category/list">Categories</a>
+                            </div>
+                        </li>
                         @if (auth()->user()->isAdmin)
                             <li class="nav-item">
                                 <a class="nav-link" href="/management/user/list">Users</a>

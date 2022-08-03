@@ -14,19 +14,7 @@
                     <x-forms.input id="title" label="Name"
                         value="{{ $article == null ? '' : $article->title }}" />
 
-                    <div class="form-floating mb-3">
-                        <select class="form-select" id="article_category_id" aria-label="Floating label select example"
-                            name="article_category_id">
-                            <option selected>Select Category</option>
-                            @foreach ($categories as $item)
-                                <span>{{ $item->name }}</span>
-                                <option selected="{{ $articleCategoryId == $item->id }}" value="{{ $item->id }}">
-                                    {{ $item->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <label for="article_category_id">Select Category</label>
-                    </div>
+                    <x-forms.select id="article_category_id" label="Category" :list="$categories" :value="$articleCategoryId" />
 
                     <textarea class="form-control" id="contents{{ $id }}" name="contents">{{ $article == null ? '' : $article->contents }}</textarea>
                 </div>
