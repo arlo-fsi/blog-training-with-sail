@@ -3,8 +3,7 @@
         aria-label="Floating label select example" name="{{ $id }}">
         <option>Select {{ $label }}</option>
         @foreach ($list as $item)
-            <span>{{ $item->name }}</span>
-            <option selected="{{ $value == $item->id }}" value="{{ $item->id }}">
+            <option @if ($value == $item->id) selected @endif value="{{ $item->id }}">
                 {{ $item->name }}
             </option>
         @endforeach

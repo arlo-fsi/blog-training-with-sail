@@ -7,7 +7,8 @@ use App\Http\Controllers\{
     ArticleController,
     AuthController,
     BlogCategoryController,
-    BlogController
+    BlogController,
+    UserController
 };
 
 /*
@@ -66,7 +67,12 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::middleware(['admin'])->group(function () {
-
+            Route::prefix('user')->group(function () {
+                Route::get('/list', [UserController::class, 'list'])->name('userList');
+                Route::post('/create', [UserController::class, 'create'])->name('userCreate');
+                Route::put('/update/{user}', [UserController::class, 'update'])->name('userUpdate');
+                Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('userDelete');
+            });
         });
     });
 });

@@ -5,6 +5,9 @@
         <form action="{{ $addMode ? route('articleCreate') : route('articleUpdate', ['article' => $article]) }}"
             method="post">
             @csrf
+            @if (!$addMode)
+                @method('PUT')
+            @endif
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ $addMode ? 'Add' : 'Edit' }} Article</h5>

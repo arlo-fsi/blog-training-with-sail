@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\UserRole;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -67,6 +68,23 @@ class User extends Authenticatable
             get: fn ($value) => $value,
             set: fn ($value) => bcrypt($value),
         );
+    }
+
+    public function getRoleTextAttribute()
+    {
+        $role = $this->attributes['role'];
+        $text = UserRole::search($role);
+
+        return $text;
+    }
+
+    public function getRegisteredAtAttribute()
+    {
+        $create_at = $this->attributes['created_at'];
+        $create_at = Carbon::parse($create_at);
+        $registered_at = $create_at->diffForHumans();
+
+        return $registered_at;
     }
 
     public function prunable()
