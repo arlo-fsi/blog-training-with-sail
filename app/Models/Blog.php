@@ -45,6 +45,15 @@ class Blog extends Model
         return $contents;
     }
 
+    public function getSearchTermsAttribute()
+    {
+        $title = $this->attributes['title'];
+        $category = $this->category->name;
+        $contents = $this->attributes['contents'];
+
+        return $title . ' ' . $category . ' ' . $contents;
+    }
+
     public function prunable()
     {
         return static::where('created_at', '<=', now()->subWeek());

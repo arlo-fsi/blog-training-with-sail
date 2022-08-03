@@ -3,21 +3,39 @@
 namespace App\Repositories;
 
 use App\Interfaces\BlogInterface;
-use App\Models\Blog;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Http\Requests\{
     CreateBlogRequest,
     UpdateBlogRequest
+};
+use App\Models\{
+    Blog,
+    BlogCategory
+};
+use Illuminate\Support\{
+    Collection,
+    Str
 };
 
 class BlogRepository implements BlogInterface
 {
     public function list(Request $req)
     {
-        $list = Blog::orderBy('created_at', 'DESC')->get();
+        $q = $req->q ?? ' ';
+        $page = $req->page ?? 1;
+        $perPage = 10;
 
-        return view('blog.list', compact('list'));
+        $blogs = Blog::orderBy('created_at', 'DESC')->get();
+        $list = $blogs->filter(function ($model) use ($q) {
+            return Str::contains($model->search_terms, $q, true);
+        });
+        $list = $this->paginate($list, $perPage, $page)->setPath('');
+        $categories = BlogCategory::all()->pluck('name')->toArray();
+
+        return view('blog.list', compact('list', 'q', 'categories'));
     }
 
     public function create(CreateBlogRequest $req)
@@ -48,5 +66,12 @@ class BlogRepository implements BlogInterface
         session()->flash('success', 'Blog Deleted');
 
         return redirect()->route('blogList');
+    }
+
+    private function paginate($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }
