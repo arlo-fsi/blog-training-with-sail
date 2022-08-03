@@ -1,6 +1,8 @@
 <div class="row">
     <div class="col-12 text-truncate text-primary">
-        <strong>{{ $blog->title }}</strong>
+        <strong>
+            <a href="{{ route('blogDetail', ['blog' => $blog]) }}">{{ $blog->title }}</a>
+        </strong>
     </div>
     <div class="col-12 text-truncate text-success">
         <small>{{ $blog->category->name }}</small>

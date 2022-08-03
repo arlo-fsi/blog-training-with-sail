@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('blog')->group(function () {
             Route::get('/list', [BlogController::class, 'list'])->name('blogList');
             Route::get('/new', [BlogController::class, 'new'])->name('blogNew');
+            Route::get('/edit/{blog}', [BlogController::class, 'edit'])->name('blogEdit');
+            Route::get('/detail/{blog}', [BlogController::class, 'detail'])->name('blogDetail');
             Route::post('/create', [BlogController::class, 'create'])->name('blogCreate');
             Route::post('/upload-image', [BlogController::class, 'uploadImage'])->name('blogUploadImage');
             Route::put('/update/{blog}', [BlogController::class, 'update'])->name('blogUpdate');

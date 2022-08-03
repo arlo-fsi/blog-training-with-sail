@@ -9,6 +9,7 @@ class Button extends Component
     public $label;
     public $type;
     public $btnType;
+    public $formId;
 
     /**
      * Create a new component instance.
@@ -18,11 +19,12 @@ class Button extends Component
      * @param string $btnType = 'primary|info|warning|danger|success'
      * @return void
      */
-    public function __construct($label = 'Submit', $type = 'submit', $btnType = 'primary')
+    public function __construct($label = 'Submit', $type = 'submit', $btnType = 'primary', $formId = null)
     {
         $this->label = $label;
         $this->type = $type;
         $this->btnType = $btnType;
+        $this->formId = $formId;
     }
 
     /**

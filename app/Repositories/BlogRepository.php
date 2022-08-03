@@ -47,6 +47,6 @@ class BlogRepository implements BlogInterface
         $blog->delete();
         session()->flash('success', 'Blog Deleted');
 
-        return redirect()->back();
+        return redirect()->route('blogList');
     }
 }

@@ -35,6 +35,18 @@ class BlogController extends Controller
         return view('blog.new', compact('categories'));
     }
 
+    public function edit(Blog $blog)
+    {
+        $categories = BlogCategory::all();
+
+        return view('blog.edit', compact('blog', 'categories'));
+    }
+
+    public function detail(Blog $blog)
+    {
+        return view('blog.detail', compact('blog'));
+    }
+
     public function create(CreateBlogRequest $req)
     {
         return $this->blog->create($req);
