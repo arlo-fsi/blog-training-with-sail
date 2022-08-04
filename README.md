@@ -43,3 +43,13 @@ sail artisan cache:clear
 sail artisan config:clear
 sail artisan migrate
 ```
+
+4. Testing
+```angular2html
+sail artisan test --env=testing
+
+<!--or-->
+sail artisan config:clear
+<!--then-->
+sail artisan test
+```
