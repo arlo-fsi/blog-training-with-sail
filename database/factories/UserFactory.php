@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'password' => 'secret', // no need to hash because hashed already on the model
-            'role' => fake()->randomElement(UserRole::values()),
+            'role' => fake()->randomElement(UserRole::toArray()),
             'remember_token' => Str::random(10),
         ];
     }

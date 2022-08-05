@@ -50,6 +50,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role' => 'int',
     ];
 
     public function getIsAdminAttribute(): bool
@@ -89,6 +90,6 @@ class User extends Authenticatable
 
     public function prunable()
     {
-        return static::where('created_at', '<=', now()->subWeek());
+        return static::where('deleted_at', '<=', now()->subWeek());
     }
 }
