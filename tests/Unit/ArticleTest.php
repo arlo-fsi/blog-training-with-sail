@@ -14,7 +14,7 @@ class ArticleTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->be(User::find(1));
+        $this->be(User::factory()->create());
     }
 
     public function test_list()

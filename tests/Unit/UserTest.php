@@ -52,7 +52,7 @@ class UserTest extends TestCase
             'username' => fake()->userName(),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
-            'role' => fake()->randomElement(UserRole::values()),
+            'role' => fake()->randomElement(UserRole::toArray()),
         ];
 
         $response = $this->actingAs($admin)->put(route('userUpdate', $user), $data);
