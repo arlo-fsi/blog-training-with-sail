@@ -11,12 +11,10 @@ use Tests\TestCase;
 
 class ArticleTest extends TestCase
 {
-    private $user;
-
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create();
+        $this->be(User::find(1));
     }
 
     public function test_list()
@@ -24,7 +22,7 @@ class ArticleTest extends TestCase
         ArticleCategory::factory()->create();
         Article::factory()->count(3)->create();
 
-        $response = $this->actingAs($this->user)->get(route('articleList'));
+        $response = $this->get(route('articleList'));
 
         $response->assertStatus(200);
         $response->assertViewHas('categories');
@@ -39,7 +37,7 @@ class ArticleTest extends TestCase
             'contents' => fake()->paragraphs(2, true),
         ];
 
-        $response = $this->actingAs($this->user)->post(route('articleCreate'), $data);
+        $response = $this->post(route('articleCreate'), $data);
 
         $response->assertSessionHas('success');
     }
@@ -53,7 +51,7 @@ class ArticleTest extends TestCase
             'contents' => fake()->paragraphs(2, true),
         ];
 
-        $response = $this->actingAs($this->user)->put(route('articleUpdate', $article), $data);
+        $response = $this->put(route('articleUpdate', $article), $data);
 
         $response->assertSessionHas('success');
     }
@@ -62,7 +60,7 @@ class ArticleTest extends TestCase
     {
         $article = Article::factory()->create();
 
-        $response = $this->actingAs($this->user)->delete(route('articleDelete', $article));
+        $response = $this->delete(route('articleDelete', $article));
 
         $response->assertSessionHas('success');
         $this->assertSoftDeleted($article);
@@ -72,7 +70,7 @@ class ArticleTest extends TestCase
     {
         $upload = UploadedFile::fake()->image('sample.jpg');
 
-        $response = $this->actingAs($this->user)->post(route('articleUploadImage'), compact('upload'));
+        $response = $this->post(route('articleUploadImage'), compact('upload'));
 
         $response->assertStatus(200);
         $response->assertSessionHas('imagePath');
