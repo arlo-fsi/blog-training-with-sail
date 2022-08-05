@@ -19,7 +19,8 @@ class IsAdmin
         if (auth()->user() && auth()->user()->isAdmin) {
             return $next($request);
         }
+        session()->flash('error', 'Permission denied!');
 
-        return redirect()->route('articles')->with('error', 'Permission denied!');
+        return redirect()->route('articleList')->with('error', 'Permission denied!');
     }
 }
